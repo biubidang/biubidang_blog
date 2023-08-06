@@ -1,6 +1,7 @@
 package com.biubidang.sevice;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.biubidang.domain.ResponseResult;
 import com.biubidang.domain.entity.Category;
 
 
@@ -12,4 +13,5 @@ import com.biubidang.domain.entity.Category;
  */
 public interface CategoryService extends IService<Category> {
 
+    ResponseResult getCategoryList();
 }
