@@ -1,16 +1,12 @@
 package com.biubidang.sevice.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.biubidang.Utils.BeanCopyUtils;
 import com.biubidang.domain.ResponseResult;
-import com.biubidang.domain.entity.Article;
 import com.biubidang.domain.entity.Category;
 import com.biubidang.domain.vo.CategoryListVo;
 import com.biubidang.mapper.CategoryMapper;
-import com.biubidang.sevice.ArticleService;
 import com.biubidang.sevice.CategoryService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
