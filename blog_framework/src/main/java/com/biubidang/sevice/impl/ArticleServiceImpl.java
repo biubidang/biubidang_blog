@@ -6,6 +6,7 @@ import com.biubidang.Utils.BeanCopyUtils;
 import com.biubidang.domain.ResponseResult;
 import com.biubidang.domain.entity.Article;
 import com.biubidang.domain.entity.Category;
+import com.biubidang.domain.vo.ArticleDetailVo;
 import com.biubidang.domain.vo.ArticleVo;
 import com.biubidang.domain.vo.HotArticleVo;
 import com.biubidang.domain.vo.PageVo;
@@ -75,6 +76,23 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>imple
         PageVo pageVo=new PageVo(articleVos,page.getTotal());
         //返回封装
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult articleDetail(Long id) {
+        //目标：根据文章id返回文章内容等信息，需要根据分类id显示上传分类名称
+        //查询目标文章
+        Article article=getById(id);
+        //vo封装
+        ArticleDetailVo articleDetailVo=BeanCopyUtils.copyBean(article,ArticleDetailVo.class);
+
+        //加入Categoryname
+        Category category=categoryService.getById(article.getCategoryId());
+        if(category!=null){
+            articleDetailVo.setCategoryname(category.getName());
+        }
+        //返回所需值
+        return ResponseResult.okResult(articleDetailVo);
     }
 
 }
