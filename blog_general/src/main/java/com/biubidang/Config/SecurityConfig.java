@@ -1,5 +1,6 @@
 package com.biubidang.Config;
 
+import com.biubidang.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 //1. 删除 WebSecurityConfigurerAdapter 类（不要扩展WebSecurityConfigurerAdapter）
 //2. 删除网络安全配置器适配器类的所有重写方法
@@ -19,6 +24,13 @@ import org.springframework.security.web.SecurityFilterChain;
     @Configuration
 
     public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    @Autowired
+    AuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    AccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -35,11 +47,18 @@ import org.springframework.security.web.SecurityFilterChain;
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/login").anonymous()
+
                 // 除上面外的所有请求全部不需要认证即可访问
                 .anyRequest().permitAll();
 
+        //配置异常处理器
+        http.exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler);
 
         http.logout().disable();
+        //把jwtAuthenticationTokenFilter添加到SpringSecurity的过滤器链中
+        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //允许跨域
         http.cors();
     }
