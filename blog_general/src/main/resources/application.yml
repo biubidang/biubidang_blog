@@ -14,3 +14,8 @@ mybatis-plus:
   configuration:
     # 日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+oss:
+  accessKey: n2QoSgH1vHvW8KdqQj2fHwA71ePcHG4jUWuiTNkk
+  secretKey: 5RI3UYB0r4M08nL1Xd8T0LZTex0Gcyzts1kNTGtm
+  bucket: biubidang-blog
