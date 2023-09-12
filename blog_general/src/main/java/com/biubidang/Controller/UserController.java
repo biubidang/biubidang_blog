@@ -16,8 +16,12 @@ public class UserController {
           return userService.getUserInfo();
 
   }
-  @PutMapping("/userinfo")
-    public  ResponseResult updateUserInfo(@RequestBody User user){
-       return userService.updateUserInfo(user);
+   @PutMapping("/userinfo")
+      public  ResponseResult updateUserInfo(@RequestBody User user){
+          return userService.updateUserInfo(user);
+  }
+  @PostMapping("/register")
+    public ResponseResult register(@RequestBody User user){
+       return  userService.register(user);
   }
 }
