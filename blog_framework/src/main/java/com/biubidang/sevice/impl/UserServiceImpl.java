@@ -30,4 +30,10 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User> implements U
         UserInfoVo userInfoVo= BeanCopyUtils.copyBean(user,UserInfoVo.class);
         return ResponseResult.okResult(userInfoVo);
     }
+
+    @Override
+    public ResponseResult updateUserInfo(User user) {
+        updateById(user);
+        return ResponseResult.okResult();
+    }
 }
