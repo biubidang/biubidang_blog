@@ -3,10 +3,7 @@ package com.biubidang.Controller;
 import com.biubidang.domain.ResponseResult;
 import com.biubidang.sevice.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/article")
@@ -28,7 +25,12 @@ public class ArticleController {
   }
   @GetMapping("/{id}")
   public ResponseResult articleDetail(@PathVariable("id") Long id){
+
     return articleService.articleDetail(id);
   }
 
+  @PutMapping("/updateViewCount/{id}")
+  public ResponseResult updateViewcount(@PathVariable ("id") Long id){
+    return articleService.updateViewcount(id);
+  }
 }

@@ -3,6 +3,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.biubidang.Utils.BeanCopyUtils;
+import com.biubidang.Utils.RedisCache;
 import com.biubidang.domain.ResponseResult;
 import com.biubidang.domain.entity.Article;
 import com.biubidang.domain.entity.Category;
@@ -26,6 +27,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>imple
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private RedisCache redisCache;
     @Override
     public ResponseResult hotArticleList(){
         //将文章按照浏览量降序排列，仅传入id，标题与浏览量参数，仅需浏览量高的前十篇文章
@@ -83,6 +87,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>imple
         //目标：根据文章id返回文章内容等信息，需要根据分类id显示上传分类名称
         //查询目标文章
         Article article=getById(id);
+        Integer viewCount = redisCache.getCacheMapValue("article:id-viewcount", id.toString());
+        article.setViewcounts(viewCount.longValue());
         //vo封装
         ArticleDetailVo articleDetailVo=BeanCopyUtils.copyBean(article,ArticleDetailVo.class);
 
@@ -93,6 +99,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>imple
         }
         //返回所需值
         return ResponseResult.okResult(articleDetailVo);
+    }
+
+    @Override
+    public ResponseResult updateViewcount(Long id) {
+        //更新redis中对应 id的浏览量
+        redisCache.incrementCacheMapValue("article:id-viewcount",id.toString(),1);
+        return ResponseResult.okResult();
     }
 
 }
