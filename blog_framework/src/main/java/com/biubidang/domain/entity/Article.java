@@ -49,6 +49,11 @@ public class Article {
     private Integer categoryId;
     @TableField(exist = false)
     private String categoryname;
+
+    public Article(Long id, long viewcounts) {
+        this.id = id;
+        this.viewcounts = viewcounts;
+    }
 }
 
 
