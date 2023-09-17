@@ -2,13 +2,19 @@ package com.biubidang.domain;
 
 import com.biubidang.enums.HttpCodeEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel("Result")
 public class ResponseResult<T> implements Serializable {
+    @ApiModelProperty("状态码")
     private Integer code;
+    @ApiModelProperty("信息")
     private String msg;
+    @ApiModelProperty("数据")
     private T data;
 
     public ResponseResult() {
