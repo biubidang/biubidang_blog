@@ -47,6 +47,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/login").anonymous()
+                //
                 .antMatchers("/logout").authenticated()
                 .antMatchers("/user/userinfo").authenticated()
                 .antMatchers("/upload").authenticated()
@@ -64,6 +65,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //允许跨域
         http.cors();
+
     }
     @Override
     @Bean
