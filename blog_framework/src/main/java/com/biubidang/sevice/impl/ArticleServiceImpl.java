@@ -63,6 +63,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>imple
         queryWrapper.eq(Objects.nonNull(categoryId)&&categoryId>0,Article::getCategoryId,categoryId);
         //保证已发表状态
         queryWrapper.eq(Article::getStatus,0);
+        queryWrapper.orderByDesc(Article::getCreatetime);
 
         //使用分页查询
         Page<Article> page=new Page<>(pageNum,pageSize);
