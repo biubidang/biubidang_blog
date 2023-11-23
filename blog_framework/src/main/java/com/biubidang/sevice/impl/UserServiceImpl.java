@@ -41,6 +41,10 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User> implements U
 
     @Override
     public ResponseResult updateUserInfo(User user) {
+
+//        if(nickNameExist(user.getNickName())){
+//            throw new SystemException(HttpCodeEnum.NICKNAME_EXIST);
+//        }
         updateById(user);
         return ResponseResult.okResult();
     }
