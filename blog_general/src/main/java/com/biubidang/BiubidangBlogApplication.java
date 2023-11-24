@@ -9,7 +9,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@MapperScan ("com.biubidang.Mapper")
+@MapperScan ("com.biubidang.mapper")
 @EnableScheduling
 @EnableSwagger2
 @EnableWebMvc

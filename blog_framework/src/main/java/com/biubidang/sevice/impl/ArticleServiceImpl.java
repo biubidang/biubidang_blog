@@ -32,13 +32,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>imple
     private RedisCache redisCache;
     @Override
     public ResponseResult hotArticleList(){
-        //将文章按照浏览量降序排列，仅传入id，标题与浏览量参数，仅需浏览量高的前十篇文章
+        //将文章按照浏览量降序排列，仅传入id，标题与浏览量参数，仅需浏览量高的前5篇文章
         LambdaQueryWrapper<Article> queryWrapper=new LambdaQueryWrapper<>();
         //当且仅当文章状态为0，即已发表状态才展示
         queryWrapper.eq(Article::getStatus,0);
         queryWrapper.orderByDesc(Article::getViewcounts);
-        //最多十条
-        Page<Article> page =new Page<>(1,10);
+        //最多5条
+        Page<Article> page =new Page<>(1,5);
         page(page,queryWrapper);
 
         List<Article> articles=page.getRecords();
